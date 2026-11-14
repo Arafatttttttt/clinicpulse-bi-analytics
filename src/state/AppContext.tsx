@@ -3,7 +3,7 @@ import type { QueryVars } from '../lib/query';
 import { lastDayOfMonth } from '../lib/format';
 import type { BootStats } from '../lib/duckdb';
 
-export type TabId = 'overview' | 'cohorts' | 'funnel' | 'workspace';
+export type TabId = 'overview' | 'cohorts' | 'funnel' | 'ai' | 'workspace';
 
 export interface Filters {
   startMonth: string; // 'YYYY-MM-01'
@@ -49,7 +49,7 @@ const Ctx = createContext<AppState | null>(null);
 export function AppProvider({ dims, stats, children }: { dims: Dimensions; stats: BootStats; children: ReactNode }) {
   const [tab, setTab] = useState<TabId>(() => {
     const h = window.location.hash.replace('#', '') as TabId;
-    return ['overview', 'cohorts', 'funnel', 'workspace'].includes(h) ? h : 'overview';
+    return ['overview', 'cohorts', 'funnel', 'ai', 'workspace'].includes(h) ? h : 'overview';
   });
   const [filters, setFilters] = useState<Filters>({
     startMonth: dims.months[0],

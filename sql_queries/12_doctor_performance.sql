@@ -33,7 +33,9 @@ per_doctor AS (
         COUNT(DISTINCT v.patient_id)                                              AS patients,
         SUM(v.net_revenue)::DOUBLE                                                AS revenue,
         AVG(v.net_revenue)::DOUBLE                                                AS avg_check,
-        AVG((v.next_completed_at <= v.scheduled_at + INTERVAL 60 DAY)::INTEGER)   AS return_60d_rate
+        -- COALESCE: a patient with no next visit did NOT return. Without it the
+        -- NULL comparison would be skipped by AVG and inflate the rate.
+        AVG(COALESCE(v.next_completed_at <= v.scheduled_at + INTERVAL 60 DAY, FALSE)::INTEGER) AS return_60d_rate
     FROM visits_with_next v
     JOIN doctors d USING (doctor_id)
     WHERE v.visit_date BETWEEN getvariable('start_date') AND getvariable('end_date')

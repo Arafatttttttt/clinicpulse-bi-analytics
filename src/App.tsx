@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Activity, Filter, Grid3x3, LayoutDashboard, Moon, RotateCcw, Sun, TerminalSquare } from 'lucide-react';
+import { Activity, Filter, Grid3x3, LayoutDashboard, Moon, RotateCcw, Sparkles, Sun, TerminalSquare } from 'lucide-react';
 import { useApp, type TabId } from './state/AppContext';
 import { Select } from './components/ui';
 import { fmtMonth, fmtNum } from './lib/format';
@@ -7,11 +7,13 @@ import Overview from './modules/Overview';
 import Cohorts from './modules/Cohorts';
 import Funnel from './modules/Funnel';
 import Workspace from './modules/Workspace';
+import AiAnalyst from './modules/AiAnalyst';
 
 const NAV: { id: TabId; label: string; icon: typeof LayoutDashboard; blurb: string }[] = [
   { id: 'overview', label: 'Executive Overview', icon: LayoutDashboard, blurb: 'Revenue, KPIs & unit economics' },
   { id: 'cohorts', label: 'Cohort Retention', icon: Grid3x3, blurb: 'Retention & LTV by acquisition month' },
   { id: 'funnel', label: 'Conversion Funnel', icon: Filter, blurb: 'Patient journey & bottlenecks' },
+  { id: 'ai', label: 'AI Analyst', icon: Sparkles, blurb: 'Text-to-SQL copilot powered by Gemini' },
   { id: 'workspace', label: 'SQL Workspace', icon: TerminalSquare, blurb: 'Schema explorer & live SQL' },
 ];
 
@@ -89,13 +91,17 @@ export default function App() {
               </button>
             ))}
           </nav>
-          {tab !== 'workspace' && <FilterBar />}
+          {tab !== 'workspace' && tab !== 'ai' && <FilterBar />}
         </header>
 
         <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-5 sm:px-6">
           {tab === 'overview' && <Overview />}
           {tab === 'cohorts' && <Cohorts />}
           {tab === 'funnel' && <Funnel />}
+          {/* Kept mounted so the conversation survives tab switches. */}
+          <div className={tab === 'ai' ? '' : 'hidden'}>
+            <AiAnalyst />
+          </div>
           {/* Keep the workspace mounted so editor contents survive tab switches. */}
           <div className={tab === 'workspace' ? '' : 'hidden'}>
             <Workspace />
