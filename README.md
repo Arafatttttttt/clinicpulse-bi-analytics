@@ -12,7 +12,7 @@ A product-analytics case study of a fictional **3-branch, 8-department clinic ne
 - **15 commented SQL files** in [`/sql_queries`](sql_queries). The app imports these exact files, so every chart's **`SQL`** button opens the query behind it.
 - **AI Data Analyst Copilot** (Gemini Text-to-SQL), with a no-key **Demo mode** for reviewers.
 
-> **Live demo:** this repo deploys itself to GitHub Pages ([workflow](.github/workflows/deploy.yml)). Enable *Settings → Pages → Source: GitHub Actions* after pushing, and the app is served at `https://<user>.github.io/<repo>/`. To run it locally, see [Run it](#8-run-it).
+> **Live demo:** **[arafatttttttt.github.io/clinicpulse-bi-analytics](https://arafatttttttt.github.io/clinicpulse-bi-analytics/)**. It runs entirely in your browser; the first load downloads the ~34 MB DuckDB engine. Every push to `main` redeploys it via [GitHub Actions](.github/workflows/deploy.yml). To run it locally, see [Run it](#8-run-it).
 
 ---
 
