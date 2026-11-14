@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Design tokens. Surfaces/ink are RGB triplets so Tailwind can apply alpha
+ * (bg-panel/60). Chart colors are hex, consumed directly by SVG via var().
+ * Categorical slots follow a fixed, CVD-validated order and are assigned to
+ * entities (department_id / branch_id), never to rank.
+ */
+:root {
+  color-scheme: light;
+  --bg: 246 246 243;
+  --panel: 252 252 251;
+  --subtle: 240 239 236;
+  --line: 225 224 217;
+  --ink: 11 11 11;
+  --ink2: 82 81 78;
+  --muted: 137 135 129;
+  --accent: 42 120 214;
+  --good: 0 99 0;
+  --bad: 208 59 59;
+  --warn: 201 133 0;
+
+  --chart-grid: #e1e0d9;
+  --chart-axis: #c3c2b7;
+  --chart-text: #898781;
+  --chart-surface: #fcfcfb;
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --s3: #1baf7a;
+  --s4: #eda100;
+  --s5: #e87ba4;
+  --s6: #008300;
+  --s7: #6250d6;
+  --s8: #e34948;
+  --s1-soft: #b7d3f6;
+  --critical: #d03b3b;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: 13 13 13;
+  --panel: 26 26 25;
+  --subtle: 34 34 32;
+  --line: 44 44 42;
+  --ink: 240 239 236;
+  --ink2: 195 194 183;
+  --muted: 137 135 129;
+  --accent: 57 135 229;
+  --good: 12 163 12;
+  --bad: 230 103 103;
+  --warn: 250 178 25;
+
+  --chart-grid: #2c2c2a;
+  --chart-axis: #383835;
+  --chart-text: #898781;
+  --chart-surface: #1a1a19;
+  --s1: #3987e5;
+  --s2: #d95926;
+  --s3: #199e70;
+  --s4: #c98500;
+  --s5: #d55181;
+  --s6: #0ca30c;
+  --s7: #9085e9;
+  --s8: #e66767;
+  --s1-soft: #2a4d7a;
+  --critical: #e66767;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-bg font-sans text-ink antialiased;
+  font-feature-settings: 'cv11', 'ss01';
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Thin, unobtrusive scrollbars for dense tables. */
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--line)) transparent;
+}
+
+/* Recharts: recessive chrome */
+.recharts-cartesian-grid line {
+  stroke: var(--chart-grid);
+}
+.recharts-cartesian-axis-tick-value {
+  fill: var(--chart-text);
+  font-size: 11px;
+}
+.recharts-cartesian-axis-line,
+.recharts-cartesian-axis-tick-line {
+  stroke: var(--chart-axis);
+}
+.recharts-wrapper:focus,
+.recharts-surface:focus,
+.recharts-wrapper *:focus {
+  outline: none;
+}
+
+/* CodeMirror sizing / theming bridge */
+.cm-editor {
+  height: 100%;
+  font-size: 13px;
+}
+.cm-editor .cm-scroller {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+  line-height: 1.6;
+}
+.cm-editor.cm-focused {
+  outline: none !important;
+}
+.dark .cm-editor,
+.dark .cm-editor .cm-gutters {
+  background-color: rgb(var(--panel)) !important;
+}
+.cm-editor .cm-gutters {
+  border-right: 1px solid rgb(var(--line)) !important;
+  background-color: rgb(var(--panel));
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(90deg, rgb(var(--subtle)) 0%, rgb(var(--line) / 0.6) 50%, rgb(var(--subtle)) 100%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+}

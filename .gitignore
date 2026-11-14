@@ -1,0 +1,7 @@
+node_modules
+dist
+data/*.csv
+*.tsbuildinfo
+.DS_Store
+.vite
+.claude/
